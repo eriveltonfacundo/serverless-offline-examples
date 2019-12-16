@@ -15,7 +15,7 @@ class Action {
 	success(transactionId, extras) {
 		this._log(transactionId, 'succeeded', extras, color_green);
 	}
-	fail(transactionId, extras, err) {
+	fail(transactionId, err, extras) {
 		this._log(transactionId, 'failed', extras, color_red, err);
 	}
 	_log(transactionId, actionStatus, extras, color = color_blue, err, timestamp = new Date()) {
