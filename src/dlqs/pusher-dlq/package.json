@@ -1,0 +1,6 @@
+{
+	"name": "pusher-dlq",
+	"scripts": {
+		"build": "(npm install)"
+	}
+}

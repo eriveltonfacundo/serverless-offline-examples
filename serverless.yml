@@ -1,0 +1,104 @@
+service: serverless-offline-examples
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  environment:
+    SNS_URL: http://127.0.0.1:4002
+    DYNAMODB_URL: http://localhost:8000
+    DYNAMODB_TABLE_EVENTS: events
+    QUEUE_PUSHER_URL: http://localhost:9324/queue/PusherQueue
+    TOPIC_PUSHER_ARN: arn:aws:sns:us-east-1:123456789012:PusherTopic
+
+package:
+  excludeDevDependencies: true
+  individually: true
+  exclude:
+    - "**/*"
+    - "!**/node_modules/**"
+    - "node_modules/**"
+
+plugins:
+  - serverless-offline-sns
+  - serverless-offline-sqs
+  - serverless-offline-sqs-dlq
+  - serverless-dynamodb-local
+  - serverless-offline
+
+custom:
+  serverless-offline-sns:
+    debug: false  
+  serverless-offline-sqs:
+    autoCreate: true
+    endpoint: http://0.0.0.0:9324
+    region: eu-west-1
+  serverless-offline-sqs-dlq:
+    pusher:
+      onError: pusher-dlq
+      maxReceiveCount: 3
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+
+resources:
+  Resources:
+    Events:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: events
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+functions:
+  start:
+    handler: src/handlers/start/handler.start
+    events:
+      - http: POST start
+    package:
+      include:
+        - src/handlers/start/handler.js
+  pusher:
+    handler: src/handlers/pusher/handler.pusher
+    events:
+      - sqs: arn:aws:sqs:elasticmq:000000000000:PusherQueue
+    package:
+      include:
+        - src/handlers/pusher/handler.js
+  pusher-dlq:
+    handler: src/dlqs/pusher-dlq/handler.pusher
+    events:
+      - sqs: arn:aws:sqs:elasticmq:000000000000:handleErrorPusherQueue
+    package:
+      include:
+        - src/dlqs/pusher-dlq/handler.js
+  saver:
+    handler: src/handlers/saver/handler.saver
+    events:
+      - sns: arn:aws:sns:us-east-1:123456789012:PusherTopic
+    package:
+      include:
+        - src/handlers/saver/handler.js
+  events:
+    handler: src/views/event/handler.event
+    events:
+      - http: GET events
+    package:
+      include:
+        - src/views/event/handler.js
+        - src/utils/action.util.js
+        - src/repositories/event.repository.js

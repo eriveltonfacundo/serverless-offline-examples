@@ -1,0 +1,10 @@
+version: '3.2'
+services:
+  queue:
+    image: s12v/elasticmq
+    ports:
+      - "9324:9324"
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"

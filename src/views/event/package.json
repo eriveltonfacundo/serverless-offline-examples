@@ -1,0 +1,6 @@
+{
+	"name": "view",
+	"scripts": {
+		"build": "(npm install)"
+	}
+}
