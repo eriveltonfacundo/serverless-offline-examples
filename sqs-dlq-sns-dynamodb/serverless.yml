@@ -2,6 +2,7 @@ service: sqs-dlq-sns-dynamodb-examples
 
 provider:
   name: aws
+  region: us-east-1
   runtime: nodejs10.x
   environment:
     SNS_URL: http://127.0.0.1:4002
@@ -9,14 +10,6 @@ provider:
     DYNAMODB_TABLE_EVENTS: events
     QUEUE_PUSHER_URL: http://localhost:9324/queue/PusherQueue
     TOPIC_PUSHER_ARN: arn:aws:sns:us-east-1:123456789012:PusherTopic
-
-package:
-  excludeDevDependencies: true
-  individually: true
-  exclude:
-    - "**/*"
-    - "!**/node_modules/**"
-    - "node_modules/**"
 
 plugins:
   - serverless-offline-sns
@@ -31,7 +24,7 @@ custom:
   serverless-offline-sqs:
     autoCreate: true
     endpoint: http://0.0.0.0:9324
-    region: eu-west-1
+    region: us-east-1
   serverless-offline-sqs-dlq:
     pusher:
       onError: pusher-dlq

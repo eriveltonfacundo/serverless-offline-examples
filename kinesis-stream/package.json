@@ -8,7 +8,7 @@
 		"debug-log": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/serverless offline start",
 		"package": "node ./node_modules/.bin/serverless package",
 		"build-handlers": "(cd ./src/handlers/process/ && npm install) && (cd ./src/handlers/start/ && npm install)",
-		"build-all": "(npm install) && (npm run build-handlers)"
+		"build-all": "(npm install) && (npm run build-handlers) && (docker-compose up -d)"
 	},
 	"devDependencies": {
 		"serverless": "^1.57.0",
