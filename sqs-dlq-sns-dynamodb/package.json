@@ -10,7 +10,7 @@
 		"build-handlers": "(cd ./src/handlers/pusher/ && npm install) && (cd ./src/handlers/start/ && npm install)",
 		"build-dlqs": "(cd ./src/dlqs/pusher-dlq/ && npm install)",
 		"build-views": "(cd ./src/views/event/ && npm install)",
-		"build-all": "(npm install) && (npm run build-handlers) && (npm run build-dlqs) && (npm run build-views) && (node ./node_modules/.bin/serverless dynamodb install) && (sudo docker-compose up -d)"
+		"build-all": "(npm install) && (npm run build-handlers) && (npm run build-dlqs) && (npm run build-views) && (node ./node_modules/.bin/serverless dynamodb install) && (docker-compose up -d)"
 	},
 	"devDependencies": {
 		"serverless": "^1.57.0",
