@@ -1,4 +1,4 @@
-service: serverless-offline-examples
+service: sqs-dlq-sns-dynamodb-examples
 
 provider:
   name: aws

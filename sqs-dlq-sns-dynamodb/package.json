@@ -1,11 +1,12 @@
 {
-	"name": "serverless-offline-examples",
+	"name": "sqs-dlq-sns-dynamodb-examples",
 	"description": "",
 	"version": "1.0.0",
 	"scripts": {
 		"start": "node ./node_modules/.bin/serverless offline start",
 		"debug": "node --inspect ./node_modules/.bin/serverless offline start",
 		"debug-log": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/serverless offline start",
+		"sonar": "node sonar-project",
 		"package": "node ./node_modules/.bin/serverless package",
 		"build-handlers": "(cd ./src/handlers/pusher/ && npm install) && (cd ./src/handlers/start/ && npm install)",
 		"build-dlqs": "(cd ./src/dlqs/pusher-dlq/ && npm install)",
@@ -18,6 +19,7 @@
 		"serverless-offline": "^5.12.0",
 		"serverless-offline-sns": "^0.68.0",
 		"serverless-offline-sqs": "^3.0.1",
-		"serverless-offline-sqs-dlq": "^1.1.1"
+		"serverless-offline-sqs-dlq": "^1.1.1",
+		"sonarqube-scanner": "^2.5.0"
 	}
 }

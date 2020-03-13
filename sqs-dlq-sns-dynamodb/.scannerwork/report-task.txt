@@ -1,0 +1,6 @@
+projectKey=sqs-dlq-sns-dynamodb-examples
+serverUrl=http://localhost:9000
+serverVersion=7.9.2.30863
+dashboardUrl=http://localhost:9000/dashboard?id=sqs-dlq-sns-dynamodb-examples
+ceTaskId=AW84Hib-AArOwvSCINZa
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AW84Hib-AArOwvSCINZa

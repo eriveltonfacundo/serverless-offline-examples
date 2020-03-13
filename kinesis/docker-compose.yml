@@ -1,0 +1,6 @@
+version: '3.2'
+services:
+  kinesalite:
+    image: instructure/kinesalite
+    ports:
+      - "4567:4567"

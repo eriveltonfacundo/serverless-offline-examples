@@ -2,9 +2,5 @@
 	"name": "pusher",
 	"scripts": {
 		"build": "(npm install)"
-	},
-	"dependencies": {
-		"@hapi/joi": "^16.1.8",
-		"axios": "^0.19.0"
 	}
 }
