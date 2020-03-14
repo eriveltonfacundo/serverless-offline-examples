@@ -1,0 +1,7 @@
+aws --endpoint-url http://localhost:4567/ kinesis create-stream --stream-name=events --shard-count=1
+
+aws --endpoint-url http://localhost:4567/ kinesis describe-stream --stream-name events
+
+aws --endpoint-url http://localhost:4567/ kinesis list-streams
+
+aws --endpoint-url http://localhost:4567/ kinesis put-record --stream-name events --partition-key 123 --data 'testdata'

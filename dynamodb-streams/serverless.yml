@@ -1,0 +1,59 @@
+service: dynamodb-streams
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: nodejs10.x
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline-dynamodb-streams
+  - serverless-offline
+
+custom:
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      heapInitial: 200m
+      heapMax: 1g
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+  serverless-offline-dynamodb-streams:
+    endpoint: http://0.0.0.0:4567
+    readInterval: 500
+    skipCacheInvalidation: false
+
+resources:
+  Resources:
+    Events:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: events
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+functions:
+  start:
+    handler: src/handlers/start/handler.start
+    events:
+      - http: POST start
+  process:
+    handler: src/handlers/process/handler.process
+    events:
+      - stream:
+          enabled: true
+          type: dynamodb
+          tableName: events
+          batchSize: 10
+          startingPosition: TRIM_HORIZON

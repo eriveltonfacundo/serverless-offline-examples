@@ -1,0 +1,9 @@
+{
+	"name": "start",
+	"scripts": {
+		"build": "(npm install)"
+	},
+	"dependencies": {
+		"uuid": "^3.3.3"
+	}
+}

@@ -1,4 +1,4 @@
-service: kinesis-examples
+service: kinesis-streams
 
 provider:
   name: aws

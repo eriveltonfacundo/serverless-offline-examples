@@ -1,0 +1,6 @@
+{
+	"name": "pusher",
+	"scripts": {
+		"build": "(npm install)"
+	}
+}
